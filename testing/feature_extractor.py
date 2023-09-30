@@ -7,7 +7,7 @@ import pandas as pd
 features = []
 
 # Specifying the directory containing audio files
-audio_folder = "../data/input_data/audio"
+audio_folder = "../data/input_data/audio/tests"
 
 # Defining the names of the features to be extracted
 feature_names = [
@@ -72,4 +72,4 @@ for folder in os.listdir(audio_folder):
 features_df = pd.DataFrame(features, columns=feature_names)
 
 # Saving the extracted features to a CSV file
-features_df.to_csv("../data/input_data/transformed/test_features.csv", index=False)
+features_df.to_csv("../data/input_data/transformed/test_features_2.csv", index=False)
