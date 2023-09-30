@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from api.apps.pages.home_page import home_endpoint
-from api.apps.pages.predition import prediction_endpoint
+from api.apps.pages.prediction import prediction_endpoint
 
 apps_router = APIRouter()
 
