@@ -6,3 +6,4 @@ idea
 configurations.yaml
 logs
 audio
+.DS_Store
