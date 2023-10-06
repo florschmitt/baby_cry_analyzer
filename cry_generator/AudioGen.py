@@ -1,25 +1,27 @@
 from audiocraft.models import AudioGen
 import torchaudio
-# from audiocraft.utils.notebook import display_audio
 from audiocraft.data.audio import audio_write
 import os
 
 
-def gen_audios(run: str = 0) -> None:
+def gen_audios(run: int = 0) -> None:
     """Function generating audios."""
-    category_folder = r"/home/fernanda/babies/donateacry_corpus_cleaned_and_updated_data/"
+    baby_audio_folder = r"donateacry_corpus_cleaned_and_updated_data/"
     model = AudioGen.get_pretrained("facebook/audiogen-medium")
+    current_path = os.getcwd()
     descriptions = ["baby crying"]
-    categories = ["burping", "belly_pain", "discomfort", "tired"]
-    # for category in os.listdir(category_folder):
+    categories = ["burping", "belly_pain", "tired", "discomfort"]
+    # for category in os.listdir(baby_audio_folder):
     for category in categories:
         print("category:", category)
-        for file_name in os.listdir(category_folder + category):
+        category_path = os.path.join(current_path, baby_audio_folder, category)
+        for file_name in os.listdir(category_path):
             if file_name.endswith(".wav"):
                 print("file_name:", file_name)
                 model.set_generation_params(
                     use_sampling=True, top_k=250, duration=7)
-                audio_path = os.path.join(category_folder, category, file_name)
+                audio_path = os.path.join(
+                    category_path, file_name)
                 prompt_waveform, prompt_sample_rate = torchaudio.load(
                     audio_path)
                 prompt_duration = 2
@@ -39,7 +41,6 @@ def gen_audios(run: str = 0) -> None:
                         strategy="loudness",
                         loudness_compressor=True,
                     )
-                    # display_audio(output, sample_rate=16000)
 
 
 gen_audios(0)
