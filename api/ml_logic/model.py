@@ -12,23 +12,18 @@ def define_model():
     '''
     The VGG16 is defined
     '''
-
     # Load the VGG-16 model (pre-trained on ImageNet)
     base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
-
     # Freeze the convolutional layers
     for layer in base_model.layers:
-    	layer.trainable = False
-
+        layer.trainable = False
     # Add custom layers for your specific task (e.g., fine-tuning for a different dataset)
     x = Flatten()(base_model.output)
     x = Dropout(0.2)(x)
     x = Dense(20, activation='relu')(x)
     output = Dense(5, activation='softmax')(x)  # Replace num_classes with your number of classes
-
     # Create the custom model
     model = Model(inputs=base_model.input, outputs=output)
-
     return model
 
 def compile_model(model):
