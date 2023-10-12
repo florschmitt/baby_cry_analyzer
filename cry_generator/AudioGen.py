@@ -6,15 +6,15 @@ import os
 
 def gen_audios(run: int = 0) -> None:
     """Function generating audios."""
-    baby_audio_folder = r"donateacry_corpus_cleaned_and_updated_data/"
+    baby_audio_path = r"./donateacry_corpus_cleaned_and_updated_data/"
     model = AudioGen.get_pretrained("facebook/audiogen-medium")
     current_path = os.getcwd()
     descriptions = ["baby crying"]
-    categories = ["burping", "belly_pain", "tired", "discomfort"]
+    categories = ["burping"]
     # for category in os.listdir(baby_audio_folder):
     for category in categories:
         print("category:", category)
-        category_path = os.path.join(current_path, baby_audio_folder, category)
+        category_path = os.path.join(current_path, baby_audio_path, category)
         for file_name in os.listdir(category_path):
             if file_name.endswith(".wav"):
                 print("file_name:", file_name)
@@ -35,7 +35,7 @@ def gen_audios(run: int = 0) -> None:
                 )
                 for idx, one_wav in enumerate(output):
                     audio_write(
-                        f'gen-{category}-{run}-{idx}-{file_name.split(".")[0]}',
+                        f'7sec/gen-{category}-{run}-{idx}-{file_name.split(".")[0]}',
                         one_wav.cpu(),
                         model.sample_rate,
                         strategy="loudness",
