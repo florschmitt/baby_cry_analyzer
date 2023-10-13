@@ -27,7 +27,7 @@ def create_folder_if_not_exists(folder_name: str) -> None:
         os.makedirs(folder_name)
 
 
-def gen_audios_per_category(category_quantity) -> None:
+def gen_audios_per_category(category_quantity: int) -> None:
     """Function generating audios."""
     print("generated_audio_path", GENERATED_AUDIO_PATH)
     create_folder_if_not_exists(GENERATED_AUDIO_PATH)
@@ -41,15 +41,18 @@ def gen_audios_per_category(category_quantity) -> None:
             for file_name in os.listdir(sample_cat_path):
                 if file_name.endswith(".wav"):
                     print("file_name:", file_name)
+                    audio_path = os.path.join(sample_cat_path, file_name)
+
                     model.set_generation_params(
                         use_sampling=True, top_k=250, duration=7)
-                    audio_path = os.path.join(
-                        sample_cat_path, file_name)
+
                     prompt_waveform, prompt_sample_rate = torchaudio.load(
                         audio_path)
+
                     prompt_duration = 2
                     prompt_waveform = prompt_waveform[..., : int(
                         prompt_duration * prompt_sample_rate)]
+
                     output = model.generate_continuation(
                         prompt_waveform,
                         prompt_sample_rate,
@@ -68,4 +71,4 @@ def gen_audios_per_category(category_quantity) -> None:
                         break
 
 
-gen_audios_per_category(500)
+gen_audios_per_category(100)
