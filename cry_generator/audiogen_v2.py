@@ -1,3 +1,4 @@
+"""Generate Audio Module"""
 import os
 import fnmatch
 import time
@@ -46,7 +47,7 @@ def gen_audios_per_category(category_quantity: int) -> None:
                     model.set_generation_params(
                         use_sampling=True, top_k=250, duration=7)
 
-                    prompt_waveform, prompt_sample_rate = torchaudio.load(
+                    prompt_waveform, prompt_sample_rate = torchaudio.load(  # pylint: disable=maybe-no-member
                         audio_path)
 
                     prompt_duration = 2
