@@ -7,3 +7,8 @@ configurations.yaml
 logs
 audio
 .DS_Store
+testssss
+data
+saved_models
+
+VGG16_Baby_prod.h5
