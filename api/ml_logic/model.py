@@ -70,5 +70,3 @@ def save_model(model):
 
 async def my_model_load(model_path):
     return load_model(model_path)
-
-
