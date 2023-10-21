@@ -32,7 +32,11 @@ def define_model():
 
 
 def compile_model(model):
-    model.compile(optimizer=Adam(learning_rate=0.00001), loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(
+        optimizer=Adam(learning_rate=0.00001),
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
     return model
 
 

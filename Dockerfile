@@ -1,5 +1,5 @@
 FROM python:3.10-slim
-FROM tensorflow/tensorflow:2.14.0
+FROM tensorflow/tensorflow:2.13.0
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 WORKDIR /app
