@@ -5,3 +5,5 @@ __pycache__
 idea
 configurations.yaml
 logs
+audio
+.DS_Store
