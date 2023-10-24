@@ -5,6 +5,8 @@ from datetime import datetime
 from keras.applications import VGG16
 from keras.models import Model, load_model
 from keras.layers import GlobalAveragePooling2D, Dropout, Dense
+
+
 def define_model():
     """
         The VGG16 is defined
@@ -27,6 +29,8 @@ def define_model():
     # Create the custom model
     model = Model(inputs=base_model.input, outputs=output)
     return model
+
+
 def compile_model(model):
     model.compile(
         optimizer=Adam(learning_rate=0.00001),
@@ -34,6 +38,8 @@ def compile_model(model):
         metrics=['accuracy']
     )
     return model
+
+
 def train_model(model, X_train, y_train, X_val, y_val):
     es = EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True, verbose=1)
     history = model.fit(
@@ -46,15 +52,23 @@ def train_model(model, X_train, y_train, X_val, y_val):
         verbose=1
     )
     return history
+
+
 def evaluate_model(model, X_test, y_test):
     return model.evaluate(X_test, y_test)
+
+
 def predict_model(model, X_new):
     return model.predict(X_new)
+
+
 def save_model(model):
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
     filename = f'model_{timestamp}.pickle'
     with open(filename, 'wb') as file:
         pickle.dump(model, file)
     file.close()
+
+
 async def my_model_load(model_path):
     return load_model(model_path)

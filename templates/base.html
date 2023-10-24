@@ -6,11 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Baby Cry Categorization{% endblock %}</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #2C3E50;
+            color: #ECF0F1;
+        }
+
+        .navbar {
+            background-color: #34495E;
+            border-bottom: 2px solid #ECF0F1;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ECF0F1 !important;
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(100%);
+        }
+
+        .container {
+            background-color: #34495E;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .alert {
+            border-radius: 5px;
+        }
+
+        .alert-danger {
+            background-color: #E74C3C;
+            border-color: #C0392B;
+            color: #ECF0F1;
+        }
+
+        .alert-success {
+            background-color: #2ECC71;
+            border-color: #27AE60;
+            color: #ECF0F1;
+        }
+
+        button.btn-primary {
+            background-color: #3498DB;
+            border-color: #2980B9;
+        }
+
+        button.btn-primary:hover {
+            background-color: #2980B9;
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">Baby Cry Categorization</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,4 +93,3 @@
 </body>
 
 </html>
-
