@@ -11,17 +11,17 @@
 
 <div class="text-danger font-weight-bold">
     {% for error in errors %}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
+    <div class="alert alert-danger" role="alert">
+        {{error}}
+    </div>
     {% endfor %}
 </div>
 
 <div class="text-success font-weight-bold">
     {% if msg %}
-        <div class="alert alert-success" role="alert">
-            {{msg}}
-        </div>
+    <div class="alert alert-success" role="alert">
+        {{msg}}
+    </div>
     {% endif %}
 </div>
 
@@ -36,5 +36,22 @@
 <div id="analysis-message" class="mt-3" style="display: none;">
     <p>Analysing in progress...</p>
 </div>
+
+{% if spectrogram %}
+<div class="mt-3">
+    <h3>Spectrogram</h3>
+    <img src="data:image/png;base64,{{spectrogram}}" alt="Spectrogram Image"/>
+</div>
+{% endif %}
+
+{% if audio_base64 %}
+<div class="mt-3">
+    <h3>Uploaded Audio: {{filename}}</h3>
+    <audio controls>
+        <source src="data:audio/wav;base64,{{audio_base64}}" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+{% endif %}
 
 {% endblock %}
