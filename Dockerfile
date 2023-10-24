@@ -1,11 +1,7 @@
-FROM python:3.10-slim
 FROM tensorflow/tensorflow:2.13.0
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-CMD uvicorn main:app --host 0.0.0.0 --port 8000
-COPY . .
 COPY api /app
+CMD uvicorn main:app --host 127.0.0.1 --port 8000
