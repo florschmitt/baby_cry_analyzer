@@ -1,10 +1,21 @@
 from keras.optimizers import Adam
 from keras.callbacks import EarlyStopping
-import pickle
 from datetime import datetime
 from keras.applications import VGG16
-from keras.models import Model, load_model
+from keras.models import load_model
 from keras.layers import GlobalAveragePooling2D, Dropout, Dense
+from keras.models import Model
+import pickle
+
+
+async def vgg16_model_load(model_path):
+    return load_model(model_path)
+
+
+async def forest_model_load(model_path):
+    with open(model_path, "rb") as file:
+        my_forest = pickle.load(file)
+        return my_forest
 
 
 def define_model():
@@ -42,6 +53,7 @@ def compile_model(model):
 
 def train_model(model, X_train, y_train, X_val, y_val):
     es = EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True, verbose=1)
+
     history = model.fit(
         X_train,
         y_train,
@@ -51,6 +63,7 @@ def train_model(model, X_train, y_train, X_val, y_val):
         callbacks=[es],
         verbose=1
     )
+
     return history
 
 
@@ -68,7 +81,3 @@ def save_model(model):
     with open(filename, 'wb') as file:
         pickle.dump(model, file)
     file.close()
-
-
-async def my_model_load(model_path):
-    return load_model(model_path)

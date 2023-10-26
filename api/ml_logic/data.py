@@ -3,9 +3,6 @@ from keras.utils import to_categorical
 from PIL import Image
 import numpy as np
 
-from main import baby_model
-
-
 def load_spectrogram():
     data_path = '/content/drive/MyDrive/Baby_cry_data/Spectograms'
     classes = {'belly_pain': 0,

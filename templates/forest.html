@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Predict - Baby Cry By Random Forest Model{% endblock %}
+
+{% block content %}
+<div style="display: flex; align-items: center;">
+    <h1>Predict by Random Forest</h1>
+    <img src="/statics/icons/forest4.png" alt="" width="70" height="70" style="margin-left: 10px;"/>
+</div>
+<p>
+    Upload a baby cry audio file, and our advanced machine learning model will analyze it to
+    categorize the type of cry.
+</p>
+
+<div class="text-danger font-weight-bold">
+    {% for error in errors %}
+    <div class="alert alert-danger" role="alert">
+        {{error}}
+    </div>
+    {% endfor %}
+</div>
+
+<div class="text-success font-weight-bold">
+    {% if msg %}
+    <div class="alert alert-success" role="alert">
+        {{msg}}
+    </div>
+    {% endif %}
+</div>
+
+<form id="upload-form" action="/forest" method="post" enctype="multipart/form-data">
+    <div class="custom-file mb-3">
+        <input type="file" class="custom-file-input" id="customFile" name="file">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Predict</button>
+</form>
+
+<div id="analysis-message" class="mt-3" style="display: none;">
+    <p>Analysing in progress...</p>
+</div>
+
+{% if audio_base64 %}
+<div class="mt-3">
+    <h3>Uploaded Audio: {{filename}}</h3>
+    <audio controls>
+        <source src="data:audio/wav;base64,{{audio_base64}}" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+{% endif %}
+
+{% if spectrogram %}
+<div class="mt-3">
+    <h3>Spectrogram</h3>
+    <img src="data:image/png;base64,{{spectrogram}}" alt="Spectrogram Image"/>
+</div>
+{% endif %}
+
+
+{% if prediction_label %}
+<div class="mt-3" style="text-align: center;">
+    {% if prediction_label == "belly_pain" %}
+        <img src="/statics/pics/belly_pain/belly_pain3.png" alt="Belly Pain" style="width: 700px;"/>
+    {% elif prediction_label == "burping" %}
+        <img src="/statics/pics/burping/burping.png" alt="Burping" style="width: 700px;"/>
+    {% elif prediction_label == "discomfort" %}
+        <img src="/statics/pics/discomfort/discomfort4.png" alt="Discomfort" style="width: 700px;"/>
+    {% elif prediction_label == "hungry" %}
+        <img src="/statics/pics/hungry/hungry3.png" alt="Hungry" style="width: 450px;"/>
+    {% elif prediction_label == "tired" %}
+        <img src="/statics/pics/tired/tired3.png" alt="Tired" style="width: 700px;"/>
+    {% endif %}
+    <p style="font-size: 20px; font-weight: bold; font-family: 'Courier New', Courier, monospace; margin-top: 10px;">
+        {% if prediction_label == "belly_pain" %}
+            Your baby is likely experiencing belly pain.
+        {% elif prediction_label == "burping" %}
+            Your baby is likely needing a burp.
+        {% elif prediction_label == "discomfort" %}
+            Your baby is likely feeling some discomfort.
+        {% elif prediction_label == "hungry" %}
+            Your baby is likely hungry.
+        {% elif prediction_label == "tired" %}
+            Your baby is likely tired.
+        {% endif %}
+    </p>
+</div>
+{% endif %}
+
+
+
+{% endblock %}
