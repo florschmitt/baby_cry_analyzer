@@ -4,7 +4,13 @@ from api.apps.render_template import render_template
 about_endpoint = APIRouter()
 
 
-@about_endpoint.get("/")
-async def get_prediction_page(request: Request):
+@about_endpoint.get("/presentation")
+async def get_presentation_page(request: Request):
     # return {"Work": "In progress"}
-    return render_template("about2.html", {"request": request})
+    return render_template("presentation.html", {"request": request})
+
+
+@about_endpoint.get("/about")
+async def get_about_page(request: Request):
+    # return {"Work": "In progress"}
+    return render_template("about.html", {"request": request})
