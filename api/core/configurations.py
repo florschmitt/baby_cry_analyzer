@@ -38,4 +38,3 @@ class SecuritySettings(Settings):
 
 server_settings = ServerSettings(config_path=config_path)
 security_settings = SecuritySettings(config_path=config_path)
-
