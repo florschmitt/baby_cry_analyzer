@@ -3,60 +3,121 @@
 {% block title %}About - Baby Cry Categorization{% endblock %}
 
 {% block content %}
-    <h1>About Us</h1>
-    <p>Welcome to the Baby Cry Categorization project. Here, we use advanced machine learning techniques to help caregivers understand and respond effectively to baby's cries.</p>
+<div id="presentationCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
-    <!-- Carousel Slideshow for Presentation Slides -->
-    <h2>Our Presentation</h2>
-    <div id="presentationCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#presentationCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#presentationCarousel" data-slide-to="1"></li>
-            <li data-target="#presentationCarousel" data-slide-to="2"></li>
-            <!-- ... Add more indicators for more slides -->
-        </ul>
+    <button id="fullscreenBtn" class="btn btn-dark position-absolute" style="z-index: 1000; top: 10px; right: 10px; background-color: transparent;">
+        <i class="fas fa-expand"></i></button>
 
-        <!-- Slides -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/statics/presentation/slide1.png" alt="Slide 1" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide2.png" alt="Slide 2" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide3.png" alt="Slide 3" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide4.png" alt="Slide 4" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide5.png" alt="Slide 5" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide6.png" alt="Slide 6" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide7.png" alt="Slide 7" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide8.png" alt="Slide 8" class="d-block w-100">
-            </div>
-            <div class="carousel-item">
-                <img src="/statics/presentation/slide9.png" alt="Slide 9" class="d-block w-100">
-            </div>
-            <!-- ... Add more slides as needed -->
+
+    <ul class="carousel-indicators position-absolute" style="top: auto; bottom: 5px;">
+        <li data-target="#presentationCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#presentationCarousel" data-slide-to="1"></li>
+        <li data-target="#presentationCarousel" data-slide-to="2"></li>
+        <li data-target="#presentationCarousel" data-slide-to="3"></li>
+        <li data-target="#presentationCarousel" data-slide-to="4"></li>
+        <li data-target="#presentationCarousel" data-slide-to="5"></li>
+        <li data-target="#presentationCarousel" data-slide-to="6"></li>
+        <li data-target="#presentationCarousel" data-slide-to="7"></li>
+        <li data-target="#presentationCarousel" data-slide-to="8"></li>
+    </ul>
+
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/statics/presentation/slide1.png" alt="Slide 1" class="d-block w-100">
         </div>
-
-        <a class="carousel-control-prev" href="#presentationCarousel" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#presentationCarousel" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide2.png" alt="Slide 2" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide3.png" alt="Slide 3" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide4.png" alt="Slide 4" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide5.png" alt="Slide 5" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide6.png" alt="Slide 6" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide7.png" alt="Slide 7" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide8.png" alt="Slide 8" class="d-block w-100">
+        </div>
+        <div class="carousel-item">
+            <img src="/statics/presentation/slide9.png" alt="Slide 9" class="d-block w-100">
+        </div>
     </div>
 
-    <!-- The rest of your About page content goes here -->
-    ...
+    <a class="carousel-control-prev" href="#presentationCarousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#presentationCarousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+
+<style>
+    .fullscreen-mode {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 9999;
+        overflow: hidden;
+        background-color: #000;
+    }
+
+    .fullscreen-mode .carousel-inner {
+        width: 100%;  /* Set width to 100% of the viewport */
+        height: 100vh; /* Make sure it occupies full viewport height */
+    }
+
+    .fullscreen-mode img {
+        max-width: 100%;  /* Limit width to 100% of viewport width */
+        max-height: 100vh; /* Limit height to 100% of viewport height */
+        margin: auto;  /* Center image within its container */
+    }
+    .carousel-item {
+        width: 100%;
+    }
+
+
+</style>
+
+<script>
+    const carouselElement = document.getElementById("presentationCarousel");
+    const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+    fullscreenBtn.addEventListener("click", function() {
+        carouselElement.classList.toggle("fullscreen-mode");
+    });
+
+    // Exit fullscreen mode when clicking outside the carousel or pressing Escape key
+    document.addEventListener("click", function(event) {
+        if (!carouselElement.contains(event.target) && carouselElement.classList.contains("fullscreen-mode")) {
+            carouselElement.classList.remove("fullscreen-mode");
+        }
+    });
+    document.addEventListener("keydown", function(event) {
+        if (carouselElement.classList.contains("fullscreen-mode")) {
+            switch (event.key) {
+                case "ArrowRight":
+                    $('#presentationCarousel').carousel('next');
+                    break;
+                case "ArrowLeft":
+                    $('#presentationCarousel').carousel('prev');
+                    break;
+                case "Escape":
+                    carouselElement.classList.remove("fullscreen-mode");
+                    break;
+            }
+        }
+    });
+</script>
 {% endblock %}
