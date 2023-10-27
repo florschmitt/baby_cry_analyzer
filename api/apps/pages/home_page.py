@@ -6,4 +6,4 @@ home_endpoint = APIRouter()
 
 @home_endpoint.get("/")
 async def get_home_page(request: Request):
-    return render_template("home.html", {"request": request})
+    return await render_template("home.html", {"request": request})

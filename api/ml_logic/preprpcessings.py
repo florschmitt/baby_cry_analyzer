@@ -6,14 +6,15 @@ import io
 import base64
 from io import BytesIO
 
-def load_audio(audio_file_path):
+
+async def load_audio(audio_file_path):
     y, sr = librosa.load(audio_file_path, sr=None)
     # y_denoised = nr.reduce_noise(y=y, sr=sr)
     y_trimmed, index = librosa.effects.trim(y, top_db=20)
     return y_trimmed
 
 
-def get_spectrogram(y):
+async def get_spectrogram(y):
     plt.figure(figsize=(10, 6))
     librosa.display.specshow(
         librosa.amplitude_to_db(np.abs(librosa.stft(y)), ref=np.max),
@@ -29,7 +30,7 @@ def get_spectrogram(y):
     return image
 
 
-def extract_mfcc(
+async def extract_mfcc(
         audio_file_path,
         sample_rate=None,
         pre_emphasis=0.97,
@@ -132,9 +133,7 @@ def extract_mfcc(
     return mfcc
 
 
-def image_to_base64(img: Image.Image) -> str:
+async def image_to_base64(img: Image.Image) -> str:
     buffered = BytesIO()
     img.save(buffered, format="PNG")
     return base64.b64encode(buffered.getvalue()).decode()
-
-
