@@ -3,18 +3,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 import io
-import base64
-from io import BytesIO
 
 
-async def load_audio(audio_file_path):
+def load_audio(audio_file_path):
     y, sr = librosa.load(audio_file_path, sr=None)
     # y_denoised = nr.reduce_noise(y=y, sr=sr)
     y_trimmed, index = librosa.effects.trim(y, top_db=20)
     return y_trimmed
 
 
-async def get_spectrogram(y):
+def get_spectrogram(y):
     plt.figure(figsize=(10, 6))
     librosa.display.specshow(
         librosa.amplitude_to_db(np.abs(librosa.stft(y)), ref=np.max),
@@ -30,7 +28,7 @@ async def get_spectrogram(y):
     return image
 
 
-async def extract_mfcc(
+def extract_mfcc(
         audio_file_path,
         sample_rate=None,
         pre_emphasis=0.97,
@@ -131,9 +129,3 @@ async def extract_mfcc(
         mfcc = mfcc[:fixed_length]
 
     return mfcc
-
-
-async def image_to_base64(img: Image.Image) -> str:
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
-    return base64.b64encode(buffered.getvalue()).decode()
