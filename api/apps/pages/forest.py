@@ -1,12 +1,16 @@
-from fastapi import APIRouter, Request, File, UploadFile
-from api.apps.render_template import render_template
-from api.components import forms
-from api.ml_logic.preprpcessings import extract_mfcc
-from api.ml_logic.preprpcessings import load_audio, get_spectrogram, image_to_base64
 import numpy as np
 from typing import Dict
-import base64
-from io import BytesIO
+from api.ml_logic.preprpcessings import extract_mfcc
+from .services import (
+    APIRouter, Request,
+    File, UploadFile,
+    render_template,
+    forms, get_audio_data,
+    random_pics
+)
+
+import time
+from api.core.constants import CLASS_LABELS
 
 forest_endpoint = APIRouter()
 
@@ -16,15 +20,17 @@ async def get_forest_page(request: Request):
     return await render_template("forest.html", {"request": request})
 
 
+async def predict(audio_features, model):
+    features_flatten = audio_features.flatten()
+    repeat_times = 1200 // len(features_flatten) + 1
+    extended_features = np.tile(features_flatten, repeat_times)[:1200]
+    extended_features = np.expand_dims(extended_features, axis=0)
+    return model.predict(extended_features)
+
+
 @forest_endpoint.post("/")
 async def forest_predict(request: Request, file: UploadFile = File(...)) -> Dict:
-    class_labels = {
-        0: "belly_pain",
-        1: "burping",
-        2: "discomfort",
-        3: "hungry",
-        4: "tired"
-    }
+    start = time.perf_counter()
 
     from main import get_forest_model
     form = forms.FileUploadForm(request)
@@ -32,34 +38,19 @@ async def forest_predict(request: Request, file: UploadFile = File(...)) -> Dict
     if not await form.file_is_valid():
         return await render_template("forest.html", {"request": request, "errors": form.errors})
 
-    # Read the uploaded audio file
-    audio_content = await file.read()
-    audio_base64 = base64.b64encode(audio_content).decode("utf-8")
-    with open("temp_audio_file.wav", "wb") as audio_file:
-        audio_file.write(audio_content)
-    mfccs = await extract_mfcc("temp_audio_file.wav")
-    prediction = await predict(mfccs, get_forest_model())
-    y_clean = await load_audio(BytesIO(audio_content))
-    spectrogram = await get_spectrogram(y_clean)
-    spectrogram_base64 = await image_to_base64(spectrogram)
-    prediction_label = class_labels.get(prediction[0])
+    audio_base64, audio_content_b, y_clean, _, spectrogram_base64 = await get_audio_data(file)
 
+    mfccs = extract_mfcc(audio_content_b)
+    prediction = await predict(mfccs, get_forest_model())
+    prediction_label = CLASS_LABELS.get(prediction[0])
+
+    print(time.perf_counter() - start)
     return await render_template("forest.html", {
         "request": request,
         "msg": "File Loaded",
         "audio_base64": audio_base64,
         "spectrogram": spectrogram_base64,
         "filename": file.filename,
-        "prediction_label": prediction_label
+        "prediction_label": prediction_label,
+        "random_image": random_pics(prediction_label)
     })
-
-
-async def predict(audio_features, model):
-    features_flatten = audio_features.flatten()
-    required_features = 1200
-    repeat_times = required_features // len(features_flatten) + 1
-    extended_features = np.tile(features_flatten, repeat_times)[:required_features]
-    extended_features = np.expand_dims(extended_features, axis=0)
-
-    prediction = model.predict(extended_features)
-    return prediction

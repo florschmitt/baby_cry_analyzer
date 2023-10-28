@@ -60,33 +60,23 @@
 
 {% if prediction_label %}
 <div class="mt-3" style="text-align: center;">
-    {% if prediction_label == "belly_pain" %}
-        <img src="/statics/pics/belly_pain/belly_pain3.png" alt="Belly Pain" style="width: 700px;"/>
-    {% elif prediction_label == "burping" %}
-        <img src="/statics/pics/burping/burping.png" alt="Burping" style="width: 700px;"/>
-    {% elif prediction_label == "discomfort" %}
-        <img src="/statics/pics/discomfort/discomfort4.png" alt="Discomfort" style="width: 700px;"/>
-    {% elif prediction_label == "hungry" %}
-        <img src="/statics/pics/hungry/hungry3.png" alt="Hungry" style="width: 450px;"/>
-    {% elif prediction_label == "tired" %}
-        <img src="/statics/pics/tired/tired3.png" alt="Tired" style="width: 700px;"/>
-    {% endif %}
+    <img src="/statics/pics/{{ prediction_label }}/{{ random_image }}" alt="{{ prediction_label }}" style="width: 700px;"/>
+
     <p style="font-size: 20px; font-weight: bold; font-family: 'Courier New', Courier, monospace; margin-top: 10px;">
         {% if prediction_label == "belly_pain" %}
-            Your baby is likely experiencing belly pain.
+        Your baby is likely experiencing belly pain.
         {% elif prediction_label == "burping" %}
-            Your baby is likely needing a burp.
+        Your baby is likely needing a burp.
         {% elif prediction_label == "discomfort" %}
-            Your baby is likely feeling some discomfort.
+        Your baby is likely feeling some discomfort.
         {% elif prediction_label == "hungry" %}
-            Your baby is likely hungry.
+        Your baby is likely hungry.
         {% elif prediction_label == "tired" %}
-            Your baby is likely tired.
+        Your baby is likely tired.
         {% endif %}
     </p>
 </div>
 {% endif %}
-
 
 
 {% endblock %}
